@@ -1,5 +1,7 @@
 import { createSocket } from "dgram";
 import { decode, encode, AUTHORITATIVE_ANSWER } from "dns-packet";
+import { promises as dnsPromises } from "dns";
+
 const server = createSocket("udp4");
 
 server.on("error", (err) => {
@@ -18,7 +20,7 @@ const db: { [key: string]: { [key: string]: string } } = {
   },
 };
 
-server.on("message", (msg, remoteInfo) => {
+server.on("message", async (msg, remoteInfo) => {
   const incomingReq = decode(msg);
   const dnsQuestions = incomingReq.questions;
 
@@ -38,6 +40,17 @@ server.on("message", (msg, remoteInfo) => {
   let response;
   if (["A", "CNAME"].includes(reqType)) {
     response = db[reqType][reqDomain!];
+  }
+
+  if (reqType === "A" && !response && db.CNAME[reqDomain]) {
+    const cnameDomain = db.CNAME[reqDomain];
+
+    try {
+      const addresses = await dnsPromises.resolve4(cnameDomain);
+      if (addresses.length > 0) response = addresses[0];
+    } catch (error) {
+      console.error(`Failed to resolve CNAME record: ${cnameDomain}:`, error);
+    }
   }
 
   if (reqType && response) {
