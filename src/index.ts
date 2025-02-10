@@ -25,13 +25,16 @@ server.on("message", (msg, remoteInfo) => {
     return;
   }
 
-  const reqDomain = dnsQuestions[0].name;
+  const reqDomain = dnsQuestions[0].name.toLowerCase();
   const reqType = dnsQuestions[0].type;
 
-  console.log("Request:\n", dnsQuestions);
+  console.log("----------------------------------------------------");
+  console.log("DNS Question : ", dnsQuestions);
+  console.log("Remote Info :", remoteInfo);
+  console.log("____________________________________________________");
 
   let response;
-  if (reqType === "A" || reqType === "CNAME") {
+  if (["A", "CNAME"].includes(reqType)) {
     response = db[reqType][reqDomain!];
   }
 
@@ -71,4 +74,4 @@ server.on("listening", () => {
   console.log(`DNS Server is running on ${address.address}:${address.port}`);
 });
 
-server.bind(5333, () => {});
+server.bind(53, () => {});
