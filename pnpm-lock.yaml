@@ -6,7 +6,9 @@ settings:
 
 importers:
 
-  .:
+  .: {}
+
+  apps/backend:
     dependencies:
       dns-packet:
         specifier: ^5.6.1
