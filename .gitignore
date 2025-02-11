@@ -6,6 +6,8 @@
 # Build outputs
 **/dist
 **/build
+**/out
+**/.next
 **/*.tsbuildinfo
 
 # Environment variables
@@ -21,3 +23,6 @@ yarn-error.log*
 # IDE/editor-specific files
 .vscode/
 .idea/
+
+# typescript
+next-env.d.ts
