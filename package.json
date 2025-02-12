@@ -9,7 +9,12 @@
     "build": "pnpm recursive run build",
     "dev": "pnpm recursive run dev",
     "start": "pnpm recursive run start",
-    "backend-dev": "pnpm --filter dns-server run dev"
+    "dns-dev": "pnpm --filter dns-server run dev",
+    "dns-build": "pnpm -F dns-server build",
+    "dns-start": "pnpm -F dns-server start",
+    "web-dev": "pnpm -F web dev",
+    "web-build": "pnpm -F web build",
+    "web-start": "pnpm -F web start"
   },
   "engines": {
     "node": ">=14.0.0"
