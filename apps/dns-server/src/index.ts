@@ -11,12 +11,12 @@ server.on("error", (err) => {
 
 const db: { [key: string]: { [key: string]: string } } = {
   A: {
-    "devakash.in": "76.76.21.21",
-    "ns.devakash.in": "3.84.135.102",
-    "ns1.devakash.in": "3.84.135.102",
+    "veeu.io": "76.76.21.21",
+    "ns1.veeu.io": "3.84.135.102",
+    "ns2.veeu.io": "3.84.135.102",
   },
   CNAME: {
-    "www.devakash.in": "devakash.in",
+    "www.veeu.io": "veeu.io",
   },
 };
 
