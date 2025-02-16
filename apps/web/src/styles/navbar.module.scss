@@ -7,6 +7,7 @@
 
   h1 {
     font-weight: 600;
+    flex: 1;
   }
 }
 
@@ -14,6 +15,8 @@
   display: flex;
   gap: 3.5rem;
   align-items: center;
+  flex: 3;
+  justify-content: center;
 
   div {
     display: flex;
@@ -28,4 +31,9 @@
   div:hover {
     text-decoration: underline;
   }
+}
+
+.action {
+  flex: 1;
+  text-align: right;
 }
