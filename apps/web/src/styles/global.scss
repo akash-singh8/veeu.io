@@ -1,5 +1,5 @@
 :root {
-  --background: #ffffff;
+  --background: #fefefe;
   --foreground: #171717;
   --lightBlack: #404040;
 }
@@ -32,9 +32,16 @@ button {
   cursor: pointer;
   color: var(--background);
   background-color: var(--foreground);
-  font-family: var(--font-poppins), sans-serif;
   padding: 0.4rem 1rem;
   font-size: 14px;
   border-radius: 12px;
   border: none;
+}
+
+input {
+  background-color: transparent;
+  border: none;
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 14px;
+  outline: none;
 }
