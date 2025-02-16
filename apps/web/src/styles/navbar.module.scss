@@ -1,0 +1,31 @@
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 3.5rem;
+  width: 100%;
+
+  h1 {
+    font-weight: 600;
+  }
+}
+
+.options {
+  display: flex;
+  gap: 3.5rem;
+  align-items: center;
+
+  div {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--lightBlack);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  div:hover {
+    text-decoration: underline;
+  }
+}

@@ -1,11 +1,11 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --lightBlack: #404040;
 }
 
 html,
 body {
-  max-width: 100vw;
   overflow-x: hidden;
   font-family: var(--font-poppins), sans-serif;
 }
@@ -13,6 +13,8 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
+  max-width: 1080px;
+  margin: auto;
 }
 
 * {
@@ -24,4 +26,15 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  color: var(--background);
+  background-color: var(--foreground);
+  font-family: var(--font-poppins), sans-serif;
+  padding: 0.4rem 1rem;
+  font-size: 14px;
+  border-radius: 12px;
+  border: none;
 }
