@@ -4,7 +4,7 @@
   flex-direction: column;
   align-items: center;
   gap: 6rem;
-  margin: 5rem 0;
+  margin: 5rem 0 4rem;
 }
 
 .title {
@@ -43,10 +43,9 @@
   }
 
   .line {
-    border: 2px solid #e7e8ed;
-    border-radius: 1px;
+    border: 1px solid #e7e8ed;
     height: 100%;
-    width: 2px;
+    width: 0;
     margin: auto;
   }
 }
@@ -105,8 +104,8 @@
   &:nth-child(3)::before,
   &:last-child::before {
     content: "";
-    width: 105%;
-    border: 2px solid #e7e8ed;
+    width: 106%;
+    border: 1px solid #e7e8ed;
     position: absolute;
     top: -104px;
   }
@@ -119,8 +118,8 @@
   &:nth-child(4) div {
     position: absolute;
     bottom: -104px;
-    width: 106%;
-    border: 2px solid #e7e8ed;
+    width: 106.5%;
+    border: 1px solid #e7e8ed;
   }
 
   h2 {
