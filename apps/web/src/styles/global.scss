@@ -35,9 +35,20 @@ button {
   color: var(--background);
   background-color: var(--foreground);
   padding: 0.4rem 1rem;
+  font-family: var(--font-poppins), sans-serif;
+  font-weight: 500;
   font-size: 14px;
-  border-radius: 12px;
+  border-radius: 8px;
   border: none;
+  transition: all 0.15s ease-out;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:active {
+    opacity: 1;
+  }
 }
 
 input {

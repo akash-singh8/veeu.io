@@ -103,7 +103,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-right: 0.75rem;
+  padding: 1px 0.4rem 1px 0;
 
   input {
     padding: 0.5rem 0.9rem;
@@ -118,6 +118,7 @@
     padding: 3px 1rem;
     border-radius: 6px;
     margin-right: 0.75rem;
+    cursor: crosshair;
   }
 
   button {
@@ -126,7 +127,7 @@
     padding: 0.25rem 0.35rem;
 
     img {
-      margin-bottom: -3px;
+      margin-bottom: -5px;
     }
   }
 }
