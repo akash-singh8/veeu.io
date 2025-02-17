@@ -6,7 +6,7 @@ import styles from "@/styles/navbar.module.scss";
 
 import stars from "@/assets/svgs/stars.svg";
 import github from "@/assets/svgs/github.svg";
-import video from "@/assets/svgs/video.svg";
+import tutorial from "@/assets/svgs/tutorial.svg";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -41,7 +41,7 @@ const Navbar = () => {
           </div>
           <div>
             <span>Tutorial</span>
-            <Image src={video} alt="video" width={18} />
+            <Image src={tutorial} alt="tutorial" width={18} />
           </div>
         </div>
 
