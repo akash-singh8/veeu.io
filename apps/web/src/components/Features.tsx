@@ -10,7 +10,7 @@ import analytics from "@/assets/features/analytics.svg";
 
 const Features = () => {
   return (
-    <div className={styles.main}>
+    <section className={styles.main}>
       <div className={styles.title}>
         <div>
           <h2>Powerful features</h2>
@@ -64,7 +64,7 @@ const Features = () => {
           <p>Monitor DNS propagation and queries across global networks.</p>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

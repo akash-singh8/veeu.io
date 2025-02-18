@@ -6,7 +6,7 @@ import right from "@/assets/svgs/right.svg";
 
 const Tutorial = () => {
   return (
-    <div className={styles.main}>
+    <section className={styles.main}>
       <div className={styles.title}>
         <h2>Veeu 101: A Quickstart</h2>
         <p>
@@ -72,7 +72,7 @@ const Tutorial = () => {
           <button>Get Started Now &nbsp; {">"}</button>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

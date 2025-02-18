@@ -14,9 +14,12 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
-  max-width: 1080px;
+  padding-top: 6rem;
+}
+
+section {
   margin: auto;
-  padding-top: 5rem;
+  max-width: 1080px;
 }
 
 * {

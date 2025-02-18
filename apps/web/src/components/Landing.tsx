@@ -9,7 +9,7 @@ import dots from "@/assets/svgs/dots.svg";
 
 const Landing = () => {
   return (
-    <div className={styles.main}>
+    <section className={styles.main}>
       <div className={styles.head}>
         <div>
           <h2>Your Domain,</h2>
@@ -63,7 +63,7 @@ const Landing = () => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -7,7 +7,7 @@ import github from "@/assets/svgs/github.svg";
 
 const OpenSource = () => {
   return (
-    <div className={styles.main}>
+    <section className={styles.main}>
       <div className={styles.title}>
         <h2>Proudly open-source</h2>
         <p>
@@ -35,7 +35,7 @@ const OpenSource = () => {
           <p>Contribute</p>
         </a>
       </div>
-    </div>
+    </section>
   );
 };
 
