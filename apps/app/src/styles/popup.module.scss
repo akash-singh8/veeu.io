@@ -1,0 +1,97 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(1px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.popup {
+  background-color: var(--background);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 512px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+
+  h2 {
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  p {
+    font-size: 14px;
+    color: var(--gray);
+  }
+
+  img {
+    cursor: pointer;
+    margin-right: -0.5rem;
+    margin-top: -0.5rem;
+  }
+}
+
+.body {
+  height: 272px;
+  padding: 1rem 0 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  div p:first-child {
+    font-size: 14px;
+    color: var(--lightBlack);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  select,
+  option {
+    cursor: pointer;
+  }
+}
+
+.inputField {
+  width: 100%;
+  border: 1px solid var(--border);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background-color: var(--background);
+  font-size: 14px;
+}
+
+.deleteRecord {
+  padding: 1rem 0 1.25rem;
+
+  table {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+
+  thead tr {
+    border-top: none;
+  }
+}
+
+.action {
+  width: 100%;
+  padding: 0.5rem;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.8;
+    background-color: var(--lightBlack);
+  }
+}
