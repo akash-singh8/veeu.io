@@ -9,11 +9,33 @@ import serverSvg from "@/assets/svgs/server.svg";
 import editSvg from "@/assets/svgs/edit.svg";
 import trashSvg from "@/assets/svgs/trash.svg";
 
+const DNS_Records = [
+  {
+    type: "A",
+    name: "@",
+    value: "192.168.1.1",
+  },
+  {
+    type: "CNAME",
+    name: "www",
+    value: "codex.veeu.io",
+  },
+];
+
 const DnsRecords = () => {
   const [task, setTask] = useState("");
   const [selectedRecord, setSelectedRecord] = useState<RecordProps | null>(
     null
   );
+
+  const setTaskAndRecord = (task: string, ind: number) => {
+    setTask(task);
+    setSelectedRecord({
+      type: DNS_Records[ind].type,
+      name: DNS_Records[ind].name,
+      value: DNS_Records[ind].value,
+    });
+  };
 
   return (
     <>
@@ -50,48 +72,16 @@ const DnsRecords = () => {
               </tr>
             </thead>
             <tbody>
-              <Record
-                type="A"
-                name="@"
-                value="192.168.1.1"
-                onEdit={() => {
-                  setTask("EditRecord");
-                  setSelectedRecord({
-                    type: "A",
-                    name: "@",
-                    value: "192.168.1.1",
-                  });
-                }}
-                onDelete={() => {
-                  setTask("DeleteRecord");
-                  setSelectedRecord({
-                    type: "A",
-                    name: "@",
-                    value: "192.168.1.1",
-                  });
-                }}
-              />
-              <Record
-                type="CNAME"
-                name="www"
-                value="codex.veeu.io"
-                onEdit={() => {
-                  setTask("EditRecord");
-                  setSelectedRecord({
-                    type: "CNAME",
-                    name: "www",
-                    value: "codex.veeu.io",
-                  });
-                }}
-                onDelete={() => {
-                  setTask("DeleteRecord");
-                  setSelectedRecord({
-                    type: "CNAME",
-                    name: "www",
-                    value: "codex.veeu.io",
-                  });
-                }}
-              />
+              {DNS_Records.map((record, i) => (
+                <Record
+                  key={i}
+                  type={record.type}
+                  name={record.name}
+                  value={record.value}
+                  onEdit={() => setTaskAndRecord("EditRecord", i)}
+                  onDelete={() => setTaskAndRecord("DeleteRecord", i)}
+                />
+              ))}
             </tbody>
           </table>
         </div>
