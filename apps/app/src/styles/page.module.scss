@@ -10,4 +10,9 @@
   flex: 1;
   border-top-left-radius: 12px;
   border: 1px solid var(--border);
+
+  > div {
+    max-width: 1240px;
+    margin: auto;
+  }
 }

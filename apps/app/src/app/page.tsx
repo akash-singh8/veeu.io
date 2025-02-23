@@ -16,7 +16,9 @@ const Home = async () => {
       <Sidebar />
 
       <div className={styles.content}>
-        <DnsRecords />
+        <div>
+          <DnsRecords />
+        </div>
       </div>
     </div>
   );
