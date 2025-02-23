@@ -1,0 +1,99 @@
+.main {
+  padding: 2.5rem;
+
+  & > h2 {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 2rem;
+  }
+}
+
+.data {
+  border: 1px solid #eee;
+  border-radius: 12px;
+}
+
+.dataTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+
+  div {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+  }
+}
+
+.records {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-collapse: collapse;
+  font-size: 14px;
+
+  tr {
+    padding: 0.75rem 1.25rem;
+    display: flex;
+    width: 100%;
+    border-top: 1px solid var(--border);
+
+    td {
+      align-self: center;
+      flex: 2;
+    }
+
+    td:last-child {
+      text-align: center;
+      flex: 1;
+    }
+  }
+
+  thead {
+    background-color: #f5f5f5;
+
+    tr {
+      font-weight: 500;
+      color: var(--gray);
+      text-transform: uppercase;
+    }
+  }
+
+  tbody {
+    tr:hover {
+      background-color: #fafafa;
+    }
+
+    td > p {
+      width: min-content;
+      min-width: 34px;
+      text-align: center;
+      padding: 4px 0.75rem;
+      border-radius: 18px;
+      background-color: #dbeafe;
+      cursor: crosshair;
+    }
+  }
+}
+
+.recordAction {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  img {
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  img:hover {
+    opacity: 0.7;
+  }
+
+  img:active {
+    opacity: 1;
+  }
+}

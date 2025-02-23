@@ -1,9 +1,25 @@
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+
 import styles from "@/styles/page.module.scss";
 
-export default function Home() {
+import Sidebar from "@/components/Sidebar";
+import DnsRecords from "@/components/DnsRecords";
+
+const Home = async () => {
+  const { userId } = await auth();
+
+  if (!userId) redirect("/auth?mode=sign-in");
+
   return (
     <div className={styles.page}>
-      <h1>hola</h1>
+      <Sidebar />
+
+      <div className={styles.content}>
+        <DnsRecords />
+      </div>
     </div>
   );
-}
+};
+
+export default Home;
