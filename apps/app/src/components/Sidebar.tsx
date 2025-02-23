@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import { UserButton } from "@clerk/nextjs";
+import { useState } from "react";
 
 import styles from "@/styles/sidebar.module.scss";
 
@@ -9,6 +12,20 @@ import settingSvg from "@/assets/svgs/settings.svg";
 import upDown from "@/assets/svgs/updown.svg";
 
 const Sidebar = () => {
+  const [showDomains, setShowDomains] = useState(false);
+
+  const toggleShowDomains = () => {
+    const hideDomains = () => {
+      setShowDomains(false);
+      document.removeEventListener("click", hideDomains);
+    };
+
+    if (!showDomains) {
+      setShowDomains(true);
+      document.addEventListener("click", hideDomains);
+    }
+  };
+
   return (
     <div className={styles.sidebar}>
       <div className={styles.top}>
@@ -16,7 +33,10 @@ const Sidebar = () => {
         <UserButton />
       </div>
 
-      <div className={styles.domain}>
+      <div
+        className={`${styles.domain} ${showDomains ? styles.active : ""}`}
+        onClick={toggleShowDomains}
+      >
         <div>
           <p className={styles.icon}>C</p>
           <div className={styles.domainName}>
@@ -25,6 +45,17 @@ const Sidebar = () => {
           </div>
         </div>
         <Image src={upDown} alt="show" width={12} />
+
+        {showDomains && (
+          <div className={styles.domainPop}>
+            <h2>Domains</h2>
+            <div className={styles.active}>
+              <p className={styles.icon}>C</p>
+              <p>codex.veeu.io</p>
+            </div>
+            <button>+ Add New Domain</button>
+          </div>
+        )}
       </div>
 
       <div className={styles.options}>

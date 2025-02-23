@@ -69,6 +69,44 @@
   }
 }
 
+.domainPop {
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  width: 100%;
+  align-items: flex-start !important;
+  flex-direction: column;
+  cursor: default;
+  padding: 0.5rem;
+  box-shadow: 0 2px 18px rgba(0, 0, 0, 0.15);
+
+  h2 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gray);
+    padding-left: 0.25rem;
+  }
+
+  div {
+    padding: 0.5rem;
+    border-radius: 8px;
+    width: 100%;
+    margin: 0.4rem 0;
+    gap: 0.5rem;
+    cursor: pointer;
+  }
+
+  button {
+    border: 1px solid var(--border);
+    background-color: var(--background);
+    color: var(--lightBlack);
+    width: 100%;
+  }
+}
+
 .options {
   display: flex;
   flex-direction: column;
@@ -88,9 +126,9 @@
   div:hover {
     background-color: rgba(0, 0, 0, 0.05);
   }
+}
 
-  .active {
-    background-color: rgba(0, 0, 0, 0.05);
-    font-weight: 500;
-  }
+.active {
+  background-color: rgba(0, 0, 0, 0.05);
+  font-weight: 500;
 }
