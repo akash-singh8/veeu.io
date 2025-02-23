@@ -3,6 +3,7 @@
   --foreground: #171717;
   --lightBlack: #404040;
   --gray: #737373;
+  --border: #e7e8ed;
 }
 
 html,
@@ -53,5 +54,4 @@ input {
   border: none;
   font-family: var(--font-poppins), sans-serif;
   font-size: 14px;
-  outline: none;
 }

@@ -1,0 +1,96 @@
+.sidebar {
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+  padding: 0 0.75rem 1rem 0;
+
+  h1 {
+    font-weight: 500;
+    font-size: 22px;
+  }
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 0.5rem;
+}
+
+.domain {
+  margin: 1.25rem 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.5rem 0.5rem;
+  border-radius: 8px;
+  position: relative;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .icon {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--background);
+    font-weight: 500;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle at right,
+        rgba(255, 92, 43, 0.8),
+        transparent 100%
+      ),
+      linear-gradient(to right, rgb(255, 208, 120), rgb(233, 179, 255));
+  }
+
+  .domainName {
+    flex-direction: column;
+    gap: 0;
+
+    p:last-child {
+      font-weight: 400;
+      color: var(--gray);
+      padding-left: 4px;
+      line-height: 18px;
+    }
+  }
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 14px;
+  color: #505050;
+
+  div {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+  }
+
+  div:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  .active {
+    background-color: rgba(0, 0, 0, 0.05);
+    font-weight: 500;
+  }
+}
