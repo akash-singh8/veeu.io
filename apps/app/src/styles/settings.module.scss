@@ -1,0 +1,109 @@
+.main {
+  padding: 2.5rem;
+
+  & > h2 {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 2rem;
+  }
+
+  > div > p {
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+}
+
+.users {
+  padding: 1rem;
+  border-radius: 12px;
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.usersTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+
+  p {
+    font-size: 14px;
+    color: var(--lightBlack);
+  }
+}
+
+.records {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-collapse: collapse;
+  font-size: 14px;
+
+  tr {
+    padding: 0.75rem 1.25rem;
+    display: flex;
+    width: 100%;
+    border-top: 1px solid var(--border);
+
+    td {
+      align-self: center;
+      flex: 2;
+    }
+
+    td:last-child {
+      text-align: center;
+      flex: 1;
+    }
+  }
+
+  thead {
+    tr {
+      font-weight: 500;
+      color: var(--gray);
+      text-transform: uppercase;
+      border-top: none;
+    }
+  }
+
+  tbody {
+    background-color: var(--background);
+    border-radius: 8px;
+  }
+
+  .active,
+  .pending {
+    width: min-content;
+    text-align: center;
+    padding: 4px 0.75rem;
+    border-radius: 18px;
+    cursor: crosshair;
+  }
+
+  .active {
+    color: #166534;
+    background-color: #dcfce7;
+  }
+
+  .pending {
+    color: #854d0e;
+    background-color: #fef9c3;
+  }
+
+  .action {
+    color: #dc2626;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.unregister {
+  margin-top: 2.5rem;
+
+  button {
+    background-color: var(--background);
+    color: var(--gray);
+    border: 1px solid var(--border);
+  }
+}
