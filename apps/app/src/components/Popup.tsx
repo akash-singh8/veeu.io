@@ -56,6 +56,24 @@ const Popup = ({ task, type, name, value, user, onClose }: PopupProps) => {
     else setIsDisabled(confirmInp.toLowerCase() !== "confirm");
   }, [confirmInp]);
 
+  useEffect(() => {
+    const container = document.querySelector(
+      `.${styles.container}`
+    ) as HTMLDivElement;
+
+    setTimeout(() => {
+      container.style.opacity = "1";
+    }, 50);
+  }, []);
+
+  const handleClose = () => {
+    const container = document.querySelector(
+      `.${styles.container}`
+    ) as HTMLDivElement;
+    container.style.opacity = "0";
+    setTimeout(onClose, 200);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.popup}>
@@ -64,7 +82,7 @@ const Popup = ({ task, type, name, value, user, onClose }: PopupProps) => {
             <h2>{title}</h2>
             <p>{description}</p>
           </div>
-          <Image src={crossSvg} alt="close" width={28} onClick={onClose} />
+          <Image src={crossSvg} alt="close" width={28} onClick={handleClose} />
         </div>
 
         {task === "DeleteRecord" ||

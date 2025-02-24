@@ -10,6 +10,8 @@
   right: 0;
   bottom: 0;
   z-index: 10;
+  opacity: 0;
+  transition: all 0.2s ease-out;
 }
 
 .popup {
