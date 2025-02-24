@@ -1,0 +1,42 @@
+.main {
+  padding: 2.5rem;
+
+  h2 {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 2rem;
+  }
+}
+
+.overview {
+  display: flex;
+  gap: 1.5rem;
+
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    div p {
+      color: var(--lightBlack);
+      font-weight: 500;
+    }
+
+    > p {
+      font-size: 28px;
+      font-weight: 500;
+    }
+  }
+}
+
+.queries {
+  margin-top: 2.5rem;
+
+  h2 {
+    font-size: 20px;
+  }
+}
