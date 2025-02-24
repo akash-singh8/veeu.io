@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
 import { useState } from "react";
 
@@ -13,6 +14,11 @@ import upDown from "@/assets/svgs/updown.svg";
 
 const Sidebar = () => {
   const [showDomains, setShowDomains] = useState(false);
+  const pathName = usePathname();
+
+  const handleNavigation = (path: string) => {
+    window.history.pushState({}, "", `/${path}`);
+  };
 
   const toggleShowDomains = () => {
     const hideDomains = () => {
@@ -59,15 +65,24 @@ const Sidebar = () => {
       </div>
 
       <div className={styles.options}>
-        <div className={styles.active}>
+        <div
+          className={pathName === "/" ? styles.active : ""}
+          onClick={() => handleNavigation("")}
+        >
           <Image src={recordSvg} alt="records" width={20} />
           <p>DNS Records</p>
         </div>
-        <div>
+        <div
+          className={pathName === "/analytics" ? styles.active : ""}
+          onClick={() => handleNavigation("analytics")}
+        >
           <Image src={analyticSvg} alt="charts" width={20} />
           <p>Analytics</p>
         </div>
-        <div>
+        <div
+          className={pathName === "/settings" ? styles.active : ""}
+          onClick={() => handleNavigation("settings")}
+        >
           <Image src={settingSvg} alt="settings" width={20} />
           <p>Settings</p>
         </div>
