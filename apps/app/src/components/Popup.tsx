@@ -8,13 +8,14 @@ import crossSvg from "@/assets/svgs/cross.svg";
 
 type PopupProps = {
   task: string;
-  type: string;
-  name: string;
-  value: string;
+  type?: string;
+  name?: string;
+  value?: string;
+  user?: string;
   onClose: () => void;
 };
 
-const Popup = ({ task, type, name, value, onClose }: PopupProps) => {
+const Popup = ({ task, type, name, value, user, onClose }: PopupProps) => {
   let title = "Add DNS Record";
   let description = "Create a new DNS record for your domain";
   let action = "Add Record";
@@ -30,13 +31,29 @@ const Popup = ({ task, type, name, value, onClose }: PopupProps) => {
       description = "Please enter 'confirm' to delete";
       action = "Delete Record";
       break;
+    case "Invite":
+      title = "Invite User";
+      description = "Please enter user's email to invite";
+      action = "Send Invitation";
+      break;
+    case "Remove":
+      title = "Remove User";
+      description = "Please enter 'confirm' to remove user";
+      action = "Remove";
+      break;
+    case "Unregister":
+      title = "Unregister Domain";
+      description = "Please enter 'confirm' to unregister domain";
+      action = "Unregister";
+      break;
   }
 
   const [isDisabled, setIsDisabled] = useState(true);
   const [confirmInp, setConfirmInp] = useState("");
 
   useEffect(() => {
-    setIsDisabled(confirmInp.toLowerCase() !== "confirm");
+    if (task === "Invite") setIsDisabled(false);
+    else setIsDisabled(confirmInp.toLowerCase() !== "confirm");
   }, [confirmInp]);
 
   return (
@@ -50,29 +67,39 @@ const Popup = ({ task, type, name, value, onClose }: PopupProps) => {
           <Image src={crossSvg} alt="close" width={28} onClick={onClose} />
         </div>
 
-        {task === "DeleteRecord" ? (
+        {task === "DeleteRecord" ||
+        task === "Invite" ||
+        task === "Remove" ||
+        task === "Unregister" ? (
           <div className={styles.deleteRecord}>
-            <table className={dnsStyles.records}>
-              <thead>
-                <tr>
-                  <td>TYPE</td>
-                  <td>NAME</td>
-                  <td>VALUE</td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <p>{type}</p>
-                  </td>
-                  <td>{name}</td>
-                  <td>{value}</td>
-                </tr>
-              </tbody>
-            </table>
+            {task === "DeleteRecord" && (
+              <table className={dnsStyles.records}>
+                <thead>
+                  <tr>
+                    <td>TYPE</td>
+                    <td>NAME</td>
+                    <td>VALUE</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <p>{type}</p>
+                    </td>
+                    <td>{name}</td>
+                    <td>{value}</td>
+                  </tr>
+                </tbody>
+              </table>
+            )}
+            {task === "Remove" && (
+              <p className={styles.removeUser}>
+                removing <strong>'{user}'</strong>
+              </p>
+            )}
             <input
               type="text"
-              placeholder="confirm"
+              placeholder={task === "Invite" ? "user@example.com" : "confirm"}
               className={styles.inputField}
               autoFocus={true}
               value={confirmInp}

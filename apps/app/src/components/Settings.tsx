@@ -1,4 +1,7 @@
+import { useState } from "react";
+
 import styles from "@/styles/settings.module.scss";
+import Popup from "@/components/Popup";
 
 const Users = [
   {
@@ -14,8 +17,15 @@ const Users = [
 ];
 
 const Settings = () => {
+  const [task, setTask] = useState("");
+  const [userToRemove, setUserToRemove] = useState("");
+
   return (
     <div className={styles.main}>
+      {task && (
+        <Popup task={task} user={userToRemove} onClose={() => setTask("")} />
+      )}
+
       <h2>Settings</h2>
 
       <div>
@@ -24,8 +34,9 @@ const Settings = () => {
         <div className={styles.users}>
           <div className={styles.usersTop}>
             <p>Manage who can access and modify your domain settings</p>
-            <button>+ Invite Users</button>
+            <button onClick={() => setTask("Invite")}>+ Invite Users</button>
           </div>
+
           <table className={styles.records}>
             <thead>
               <tr>
@@ -50,7 +61,15 @@ const Settings = () => {
                   {user.role === "Owner" ? (
                     <td></td>
                   ) : (
-                    <td className={styles.action}>remove</td>
+                    <td
+                      className={styles.action}
+                      onClick={() => {
+                        setUserToRemove(user.id);
+                        setTask("Remove");
+                      }}
+                    >
+                      remove
+                    </td>
                   )}
                 </tr>
               ))}
@@ -61,7 +80,7 @@ const Settings = () => {
 
       <div className={styles.unregister}>
         <p>Danzer Zone</p>
-        <button>Unregister Domain</button>
+        <button onClick={() => setTask("Unregister")}>Unregister Domain</button>
       </div>
     </div>
   );
