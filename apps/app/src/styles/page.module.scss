@@ -10,9 +10,30 @@
   flex: 1;
   border-top-left-radius: 12px;
   border: 1px solid var(--border);
+  overflow: auto;
 
   > div {
     max-width: 1240px;
     margin: auto;
+    height: 100%;
+  }
+}
+
+.notFound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 100%;
+  color: var(--gray);
+
+  p:first-child {
+    font-weight: 600;
+    font-size: 28px;
+  }
+
+  p:last-child {
+    font-size: 22px;
   }
 }
