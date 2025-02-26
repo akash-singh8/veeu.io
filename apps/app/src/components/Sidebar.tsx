@@ -13,6 +13,10 @@ import settingSvg from "@/assets/svgs/settings.svg";
 import upDown from "@/assets/svgs/updown.svg";
 
 const Sidebar = () => {
+  const domains = ["akash.veeu.io", "dev.veeu.io", "test.veeu.io"];
+  const [currDomain, setCurrDomain] = useState(domains[0]);
+  const domainName = currDomain?.split(".")[0];
+
   const [showDomains, setShowDomains] = useState(false);
   const pathName = usePathname();
 
@@ -39,30 +43,43 @@ const Sidebar = () => {
         <UserButton />
       </div>
 
-      <div
-        className={`${styles.domain} ${showDomains ? styles.active : ""}`}
-        onClick={toggleShowDomains}
-      >
-        <div>
-          <p className={styles.icon}>C</p>
-          <div className={styles.domainName}>
-            <p>Codex</p>
-            <p>.veeu.io</p>
-          </div>
-        </div>
-        <Image src={upDown} alt="show" width={12} />
-
-        {showDomains && (
-          <div className={styles.domainPop}>
-            <h2>Domains</h2>
-            <div className={styles.active}>
-              <p className={styles.icon}>C</p>
-              <p>codex.veeu.io</p>
+      {currDomain ? (
+        <div
+          className={`${styles.domain} ${showDomains ? styles.active : ""}`}
+          onClick={toggleShowDomains}
+        >
+          <div>
+            <p className={styles.icon}>{domainName[0].toUpperCase()}</p>
+            <div className={styles.domainName}>
+              <p>{domainName[0].toUpperCase() + domainName.slice(1)}</p>
+              <p>.veeu.io</p>
             </div>
-            <button>+ Add New Domain</button>
           </div>
-        )}
-      </div>
+          <Image src={upDown} alt="show" width={12} />
+
+          {showDomains && (
+            <div className={styles.domainPop}>
+              <h2>Domains</h2>
+              <div className={styles.domainsList}>
+                {domains.map((d) => (
+                  <div
+                    className={currDomain === d ? styles.active : ""}
+                    onClick={() => setCurrDomain(d)}
+                  >
+                    <p className={styles.icon}>{d[0].toUpperCase()}</p>
+                    <p>{d}</p>
+                  </div>
+                ))}
+              </div>
+              <button>+ Add New Domain</button>
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className={styles.newDomain}>
+          Welcome Boss ^^ Book your first Domain to continue
+        </div>
+      )}
 
       <div className={styles.options}>
         <div

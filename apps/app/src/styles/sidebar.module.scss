@@ -36,7 +36,7 @@
   div {
     display: flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.75rem;
   }
 
   .icon {
@@ -57,13 +57,13 @@
   }
 
   .domainName {
+    align-items: flex-start;
     flex-direction: column;
     gap: 0;
 
     p:last-child {
       font-weight: 400;
       color: var(--gray);
-      padding-left: 4px;
       line-height: 18px;
     }
   }
@@ -90,21 +90,44 @@
     padding-left: 0.25rem;
   }
 
-  div {
-    padding: 0.5rem;
-    border-radius: 8px;
-    width: 100%;
-    margin: 0.4rem 0;
-    gap: 0.5rem;
-    cursor: pointer;
-  }
-
   button {
     border: 1px solid var(--border);
     background-color: var(--background);
     color: var(--lightBlack);
     width: 100%;
   }
+}
+
+.domainsList {
+  flex-direction: column;
+  gap: 0.25rem !important;
+  width: 100%;
+
+  div {
+    padding: 6px;
+    border-radius: 8px;
+    width: 100%;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-weight: 400;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+  }
+}
+
+.newDomain {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background-color: var(--background);
+  color: var(--gray);
+  font-size: 14px;
+  font-weight: 500;
+  width: 100%;
+  text-align: center;
+  padding: 1rem 0.5rem;
+  margin: 1.25rem 0 1rem;
 }
 
 .options {
@@ -130,5 +153,5 @@
 
 .active {
   background-color: rgba(0, 0, 0, 0.05);
-  font-weight: 500;
+  font-weight: 500 !important;
 }
