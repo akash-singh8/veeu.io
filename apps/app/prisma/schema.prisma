@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  email           String   @id
+  domains         Domain[]
+  invitesSent     Invite[] @relation("inviteSent")
+  invitesReceived Invite[] @relation("inviteReceived")
+}
+
+model Domain {
+  domain       String   @id
+  createdAt    DateTime @default(now())
+  records      Record[]
+  queries      Int[]
+  totalQueries BigInt
+  responseTime Int
+  ownerId      String
+  owner        User     @relation(fields: [ownerId], references: [email], onDelete: Cascade)
+  invites      Invite[]
+}
+
+model Invite {
+  id         String  @id @default(uuid())
+  status     Boolean
+  senderId   String
+  receiverId String
+  domainId   String
+  domain     Domain  @relation(fields: [domainId], references: [domain], onDelete: Cascade)
+  sender     User    @relation("inviteSent", fields: [senderId], references: [email], onDelete: Cascade)
+  receiver   User    @relation("inviteReceived", fields: [receiverId], references: [email], onDelete: Cascade)
+}
+
+model Record {
+  id       String @id @default(uuid())
+  type     String
+  name     String
+  value    String
+  domainId String
+  domain   Domain @relation(fields: [domainId], references: [domain], onDelete: Cascade)
+}
