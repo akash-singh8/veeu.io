@@ -14,7 +14,10 @@
     "dns-start": "pnpm -F dns-server start",
     "web-dev": "pnpm -F web dev",
     "web-build": "pnpm -F web build",
-    "web-start": "pnpm -F web start"
+    "web-start": "pnpm -F web start",
+    "app-dev": "pnpm -F app dev",
+    "app-build": "pnpm -F app build",
+    "app-start": "pnpm -F app start"
   },
   "engines": {
     "node": ">=14.0.0"
