@@ -1,5 +1,9 @@
 import Image from "next/image";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import { useUser } from "@clerk/nextjs";
+import { changeDomain } from "@/store/domainSlice";
 
 import styles from "@/styles/newdomain.module.scss";
 
@@ -8,10 +12,13 @@ import annoyedSvg from "@/assets/svgs/annoyed.svg";
 
 const NewDomain = () => {
   const [domain, setDomain] = useState("");
-  const [isAvailable, setIsAvailable] = useState(0); // possible values: -1 => not available, 0 => not checked, and 1 => available
+  // -1 => not available, 0 => not checked, 1 => available
+  const [isAvailable, setIsAvailable] = useState(0);
   const [searching, setSearching] = useState(false);
+  const dispatch = useDispatch();
+  const { user } = useUser();
 
-  const searchDomain = () => {
+  const searchDomain = async () => {
     setIsAvailable(0);
 
     const domainInput = document.querySelector(
@@ -21,16 +28,62 @@ const NewDomain = () => {
     // Check that the domain only contains letters, numbers, and hyphens.
     const validRegex = /^[a-zA-Z0-9-]+$/;
     if (!validRegex.test(domainInput.value)) {
-      alert("Invalid domain. Please use only letters, numbers, and hyphens.");
+      toast.error(
+        "Invalid domain. Please use only letters, numbers, and hyphens."
+      );
       return;
     }
 
-    setDomain(domainInput.value);
     setSearching(true);
-    setTimeout(() => {
-      setSearching(false);
-      setIsAvailable(1);
-    }, 2000);
+    setDomain(`${domainInput.value}.veeu.io`);
+
+    try {
+      const response = await fetch(
+        `/api/check?domain=${domainInput.value}.veeu.io`
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setIsAvailable(data.isAvailable ? 1 : -1);
+      } else {
+        throw new Error("Domain check failed");
+      }
+    } catch (err) {
+      toast.error("Unable to check domains! Please try again later.");
+    }
+
+    setSearching(false);
+  };
+
+  const bookDomain = async () => {
+    setSearching(true);
+
+    try {
+      const response = await fetch("/api/domain/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          domain,
+          date: new Date().toISOString(),
+          email: user?.primaryEmailAddress?.emailAddress,
+        }),
+      });
+
+      if (response.ok) {
+        dispatch(changeDomain(domain));
+        toast.success(`Yay ${domain} is all yours. Enjoy!`);
+      } else if (response.status === 409) {
+        toast.info("Domain already registered! Please try any other domain.");
+      } else {
+        throw new Error("Domain registration failed");
+      }
+    } catch (err) {
+      toast.error("Unable to check domains! Please try again later.");
+    }
+
+    setSearching(false);
   };
 
   return (
@@ -59,18 +112,20 @@ const NewDomain = () => {
                 <div className={styles.available}>
                   <Image src={checkSvg} alt="check" width={20} />
                   <p>
-                    <span>{domain}.veeu.io</span> is available!
+                    <span>{domain}</span> is available!
                   </p>
                 </div>
 
-                <button>Book Domain</button>
+                <button onClick={bookDomain} disabled={searching}>
+                  Book Domain
+                </button>
               </>
             ) : (
               <div className={styles.notAvailable}>
                 <Image src={annoyedSvg} alt="annoyed" width={24} />
                 <p>
-                  <span>{domain}.veeu.io</span> not available, Please try
-                  another domain!
+                  <span>{domain}</span> is not available, Please try another
+                  domain!
                 </p>
               </div>
             )}
