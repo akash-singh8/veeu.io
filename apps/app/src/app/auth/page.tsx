@@ -3,6 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 import {
   SignedIn,
   SignedOut,
@@ -40,13 +41,13 @@ const Auth = () => {
         });
 
         if (!response.ok) {
-          alert("Registration failed! Please try again later.");
+          toast.error("Registration failed! Please try again later.");
           await clerk.signOut();
         } else {
           router.push("/");
         }
       } catch (error) {
-        alert("Unable to register new user! Please try again later.");
+        toast.error("Unable to register new user! Please try again later.");
         await clerk.signOut();
       }
     };
