@@ -15,6 +15,8 @@ datasource db {
 
 model User {
   email           String   @id
+  firstName       String
+  lastName        String
   domains         Domain[]
   invitesSent     Invite[] @relation("inviteSent")
   invitesReceived Invite[] @relation("inviteReceived")
