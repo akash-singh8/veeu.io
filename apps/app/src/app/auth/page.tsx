@@ -1,34 +1,80 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import {
   SignedIn,
   SignedOut,
   SignIn,
-  SignOutButton,
   SignUp,
+  useClerk,
+  useUser,
 } from "@clerk/nextjs";
 
 import styles from "@/styles/auth.module.scss";
 
 const Auth = () => {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const isSignUp = searchParams.get("mode") === "sign-up";
+
+  const clerk = useClerk();
+  const { user, isLoaded } = useUser();
+
+  useEffect(() => {
+    if (!isLoaded || !user) return;
+
+    const registerUser = async () => {
+      try {
+        const response = await fetch("/api/register-user", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.primaryEmailAddress?.emailAddress,
+          }),
+        });
+
+        if (!response.ok) {
+          alert("Registration failed! Please try again later.");
+          await clerk.signOut();
+        } else {
+          router.push("/");
+        }
+      } catch (error) {
+        alert("Unable to register new user! Please try again later.");
+        await clerk.signOut();
+      }
+    };
+
+    registerUser();
+  }, [clerk, user, isLoaded]);
 
   return (
     <div className={styles.main}>
       <div className={styles.auth}>
         <SignedOut>
           {isSignUp ? (
-            <SignUp routing="hash" signInUrl="/auth?mode=sign-in" />
+            <SignUp
+              routing="hash"
+              signInUrl="/auth?mode=sign-in"
+              forceRedirectUrl="/auth?mode=sign-up"
+            />
           ) : (
-            <SignIn routing="hash" signUpUrl="/auth?mode=sign-up" />
+            <SignIn
+              routing="hash"
+              signUpUrl="/auth?mode=sign-up"
+              forceRedirectUrl="/auth?mode=sign-in"
+            />
           )}
         </SignedOut>
 
         <SignedIn>
-          <SignOutButton />
-          <h2>Welcome bro</h2>
+          <h2>Registering...</h2>
         </SignedIn>
       </div>
 
