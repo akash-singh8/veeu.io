@@ -28,8 +28,8 @@ model Domain {
   createdAt    DateTime @default(now())
   records      Record[]
   queries      Int[]
-  totalQueries BigInt
   responseTime Int
+  totalQueries String
   ownerId      String
   owner        User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   invites      Invite[]

@@ -32,7 +32,7 @@ export const POST = async (request: NextRequest) => {
     await prisma.domain.create({
       data: {
         domain,
-        totalQueries: 0,
+        totalQueries: "0",
         responseTime: 0,
         createdAt: new Date(date),
         ownerId: userId,
