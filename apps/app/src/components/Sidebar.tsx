@@ -2,23 +2,30 @@
 
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { UserButton } from "@clerk/nextjs";
-import { useState } from "react";
 
 import styles from "@/styles/sidebar.module.scss";
 
+import { StoreState } from "@/store/store";
 import recordSvg from "@/assets/svgs/server.svg";
 import analyticSvg from "@/assets/svgs/analytics.svg";
 import settingSvg from "@/assets/svgs/settings.svg";
 import upDown from "@/assets/svgs/updown.svg";
 
 const Sidebar = () => {
-  const domains = ["akash.veeu.io", "dev.veeu.io", "test.veeu.io"];
-  const [currDomain, setCurrDomain] = useState(domains[0]);
+  const domains = useSelector((state: StoreState) => state.domains);
+  const currDomainValue = useSelector((state: StoreState) => state.currDomain);
+
+  const pathName = usePathname();
+  const [showDomains, setShowDomains] = useState(false);
+  const [currDomain, setCurrDomain] = useState("");
   const domainName = currDomain?.split(".")[0];
 
-  const [showDomains, setShowDomains] = useState(false);
-  const pathName = usePathname();
+  useEffect(() => {
+    setCurrDomain(currDomainValue);
+  }, [currDomainValue]);
 
   const handleNavigation = (path: string) => {
     window.history.pushState({}, "", `/${path}`);
@@ -61,13 +68,14 @@ const Sidebar = () => {
             <div className={styles.domainPop}>
               <h2>Domains</h2>
               <div className={styles.domainsList}>
-                {domains.map((d) => (
+                {domains.map((domain) => (
                   <div
-                    className={currDomain === d ? styles.active : ""}
-                    onClick={() => setCurrDomain(d)}
+                    key={domain}
+                    className={currDomain === domain ? styles.active : ""}
+                    onClick={() => setCurrDomain(domain)}
                   >
-                    <p className={styles.icon}>{d[0].toUpperCase()}</p>
-                    <p>{d}</p>
+                    <p className={styles.icon}>{domain[0].toUpperCase()}</p>
+                    <p>{domain}</p>
                   </div>
                 ))}
               </div>
