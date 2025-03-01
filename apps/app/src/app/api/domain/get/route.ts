@@ -9,17 +9,8 @@ export const GET = async (request: NextRequest) => {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    const { searchParams } = new URL(request.url);
-    const email = searchParams.get("email");
-    if (!email) {
-      return NextResponse.json(
-        { message: "Invalid request! Include email." },
-        { status: 400 }
-      );
-    }
-
     const user = await prisma.user.findUnique({
-      where: { email },
+      where: { id: userId },
       select: {
         domains: {
           include: {

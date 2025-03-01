@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useDispatch } from "react-redux";
-import { useUser } from "@clerk/nextjs";
 import { toast } from "react-toastify";
 
 import { changeDomain, setDomains } from "@/store/domainSlice";
@@ -16,17 +15,12 @@ import NewDomain from "@/components/NewDomain";
 const Content = () => {
   const pathName = usePathname();
   const dispatch = useDispatch();
-  const { user } = useUser();
   const [hasDomains, setHasDomains] = useState(false);
 
   useEffect(() => {
-    if (!user) return;
-
     const fetchDomainWRecords = async () => {
       try {
-        const response = await fetch(
-          `/api/domain/get?email=${user?.primaryEmailAddress?.emailAddress}`
-        );
+        const response = await fetch("/api/domain/get");
 
         if (response.ok) {
           const data = await response.json();
@@ -50,7 +44,7 @@ const Content = () => {
     };
 
     fetchDomainWRecords();
-  }, [user]);
+  }, []);
 
   if (!hasDomains) return <NewDomain />;
 
