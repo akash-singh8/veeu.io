@@ -2,7 +2,6 @@ import Image from "next/image";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { useUser } from "@clerk/nextjs";
 import { changeDomain } from "@/store/domainSlice";
 
 import styles from "@/styles/newdomain.module.scss";
@@ -16,7 +15,6 @@ const NewDomain = () => {
   const [isAvailable, setIsAvailable] = useState(0);
   const [searching, setSearching] = useState(false);
   const dispatch = useDispatch();
-  const { user } = useUser();
 
   const searchDomain = async () => {
     setIsAvailable(0);
@@ -67,7 +65,6 @@ const NewDomain = () => {
         body: JSON.stringify({
           domain,
           date: new Date().toISOString(),
-          email: user?.primaryEmailAddress?.emailAddress,
         }),
       });
 

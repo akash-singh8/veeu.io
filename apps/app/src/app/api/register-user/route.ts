@@ -27,12 +27,14 @@ export const POST = async (request: NextRequest) => {
     }
 
     await prisma.user.create({
-      data: { email, firstName, lastName: lastName || "" },
+      data: { id: userId, email, firstName, lastName },
+      select: { id: true },
     });
+
     return NextResponse.json({ message: "User registered!" }, { status: 201 });
   } catch (err) {
     console.error("Error while registering new user :", err);
-    NextResponse.json(
+    return NextResponse.json(
       { message: "Unable to register new user! Please try again later." },
       { status: 500 }
     );

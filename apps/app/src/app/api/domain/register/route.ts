@@ -10,10 +10,10 @@ export const POST = async (request: NextRequest) => {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    const { email, domain, date } = await request.json();
-    if (!email || !domain || !date) {
+    const { domain, date } = await request.json();
+    if (!domain || !date) {
       return NextResponse.json(
-        { message: "Invalid request! Include email, domain and date." },
+        { message: "Invalid request! Include domain and date." },
         { status: 400 }
       );
     }
@@ -35,7 +35,7 @@ export const POST = async (request: NextRequest) => {
         totalQueries: 0,
         responseTime: 0,
         createdAt: new Date(date),
-        ownerId: email,
+        ownerId: userId,
       },
     });
     return NextResponse.json(

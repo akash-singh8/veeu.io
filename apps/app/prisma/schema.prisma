@@ -14,9 +14,10 @@ datasource db {
 }
 
 model User {
-  email           String   @id
+  id              String   @id
+  email           String   @unique
   firstName       String
-  lastName        String
+  lastName        String?
   domains         Domain[]
   invitesSent     Invite[] @relation("inviteSent")
   invitesReceived Invite[] @relation("inviteReceived")
@@ -30,19 +31,19 @@ model Domain {
   totalQueries BigInt
   responseTime Int
   ownerId      String
-  owner        User     @relation(fields: [ownerId], references: [email], onDelete: Cascade)
+  owner        User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   invites      Invite[]
 }
 
 model Invite {
-  id         String  @id @default(uuid())
-  status     Boolean
-  senderId   String
-  receiverId String
-  domainId   String
-  domain     Domain  @relation(fields: [domainId], references: [domain], onDelete: Cascade)
-  sender     User    @relation("inviteSent", fields: [senderId], references: [email], onDelete: Cascade)
-  receiver   User    @relation("inviteReceived", fields: [receiverId], references: [email], onDelete: Cascade)
+  id            String  @id @default(uuid())
+  status        Boolean
+  senderEmail   String
+  receiverEmail String
+  domainId      String
+  domain        Domain  @relation(fields: [domainId], references: [domain], onDelete: Cascade)
+  sender        User    @relation("inviteSent", fields: [senderEmail], references: [email], onDelete: Cascade)
+  receiver      User    @relation("inviteReceived", fields: [receiverEmail], references: [email], onDelete: Cascade)
 }
 
 model Record {
