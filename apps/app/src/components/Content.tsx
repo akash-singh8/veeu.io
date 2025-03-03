@@ -11,6 +11,8 @@ import Analytics from "@/components/Analytics";
 import Settings from "@/components/Settings";
 import NotFound from "@/components/NotFound";
 import NewDomain from "@/components/NewDomain";
+import { mapDomainRecords, setCurrRecords } from "@/store/recordSlice";
+import { StoreState } from "@/store/store";
 
 const Content = () => {
   const pathName = usePathname();
@@ -24,15 +26,27 @@ const Content = () => {
 
         if (response.ok) {
           const data = await response.json();
+
           if (data.domains?.length) {
-            dispatch(changeDomain(data.domains[0].domain));
             setHasDomains(true);
+            dispatch(changeDomain(data.domains[0].domain));
+            dispatch(
+              setDomains(
+                data.domains?.map((item: { domain: string }) => item.domain)
+              )
+            );
+
+            const domainRecordMap: any = {};
+            data.domains.forEach((item: any) => {
+              domainRecordMap[item.domain] = item.records;
+            });
+
+            dispatch(mapDomainRecords(domainRecordMap));
+            dispatch(setCurrRecords(data.domains[0].records));
+          } else {
+            // TODO: redirect to new domain registration
+            toast.info("Please register a domain to continue.");
           }
-          dispatch(
-            setDomains(
-              data.domains?.map((item: { domain: string }) => item.domain)
-            )
-          );
         } else if (response.status === 404) {
           toast.info("User not found!");
         } else {
