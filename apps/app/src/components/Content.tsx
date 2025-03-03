@@ -60,7 +60,7 @@ const Content = () => {
     fetchDomainWRecords();
   }, []);
 
-  if (!hasDomains) return <NewDomain />;
+  if (!hasDomains) return <NewDomain isFirstDomain={true} />;
 
   return pathName === "/" ? (
     <DnsRecords />
@@ -68,6 +68,8 @@ const Content = () => {
     <Analytics />
   ) : pathName === "/settings" ? (
     <Settings />
+  ) : pathName === "/new-domain" ? (
+    <NewDomain />
   ) : (
     <NotFound />
   );

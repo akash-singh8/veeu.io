@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -81,7 +82,9 @@ const Sidebar = () => {
                   </div>
                 ))}
               </div>
-              <button>+ Add New Domain</button>
+              <Link href="/new-domain">
+                <button>+ Add New Domain</button>
+              </Link>
             </div>
           )}
         </div>
