@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 
 import { StoreState } from "@/store/store";
-import { addRecord, updateRecord } from "@/store/recordSlice";
-import { postDnsRecord, putDnsRecord } from "@/lib/recordOps";
+import { addRecord, updateRecord, removeRecord } from "@/store/recordSlice";
+import { postDnsRecord, putDnsRecord, deleteDnsRecord } from "@/lib/recordOps";
 
 import styles from "@/styles/popup.module.scss";
 import dnsStyles from "@/styles/dnsrecords.module.scss";
@@ -62,6 +62,8 @@ const Popup = ({
       break;
   }
 
+  const dispatch = useDispatch();
+  const domain = useSelector((state: StoreState) => state.domain.currDomain);
   const [isDisabled, setIsDisabled] = useState(true);
   const [confirmInp, setConfirmInp] = useState("");
 
@@ -86,6 +88,20 @@ const Popup = ({
     ) as HTMLDivElement;
     container.style.opacity = "0";
     setTimeout(onClose, 200);
+  };
+
+  const deleteRecord = async () => {
+    const isDeleted = await deleteDnsRecord(recordId!, domain);
+    if (!isDeleted) return;
+    dispatch(removeRecord({ domain, id: recordId }));
+  };
+
+  const actionHandler = async () => {
+    setIsDisabled(true);
+    if (task === "DeleteRecord") await deleteRecord();
+    setIsDisabled(false);
+
+    onClose();
   };
 
   return (
@@ -138,7 +154,11 @@ const Popup = ({
               onChange={(e) => setConfirmInp(e.target.value)}
             />
 
-            <button className={styles.action} disabled={isDisabled}>
+            <button
+              onClick={actionHandler}
+              className={styles.action}
+              disabled={isDisabled}
+            >
               {action}
             </button>
           </div>
@@ -146,6 +166,7 @@ const Popup = ({
           <RecordBody
             task={task}
             action={action}
+            domain={domain}
             recordId={recordId!}
             rType={type!}
             rName={name!}
@@ -163,6 +184,7 @@ const Popup = ({
 type RecordProps = {
   task: string;
   action: string;
+  domain: string;
   recordId: string;
   rType: string;
   rName: string;
@@ -175,6 +197,7 @@ type RecordProps = {
 const RecordBody = ({
   task,
   action,
+  domain,
   recordId,
   rType,
   rName,
@@ -184,7 +207,6 @@ const RecordBody = ({
   close,
 }: RecordProps) => {
   const dispatch = useDispatch();
-  const domain = useSelector((state: StoreState) => state.domain.currDomain);
   const [type, setType] = useState(rType ?? "A");
   const [name, setName] = useState(rName);
   const [value, setValue] = useState(rValue);
@@ -220,9 +242,11 @@ const RecordBody = ({
     );
   };
 
-  const actionHandler = () => {
-    if (task === "NewRecord") addNewRecord();
-    if (task === "EditRecord") modifyRecord();
+  const actionHandler = async () => {
+    setIsDisabled(true);
+    if (task === "NewRecord") await addNewRecord();
+    if (task === "EditRecord") await modifyRecord();
+    setIsDisabled(false);
 
     close();
   };

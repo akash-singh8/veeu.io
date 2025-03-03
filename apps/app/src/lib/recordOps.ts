@@ -69,3 +69,27 @@ export const putDnsRecord = async (
     toast.error("Unable to update record. Please try again later!");
   }
 };
+
+export const deleteDnsRecord = async (id: string, domain: string) => {
+  try {
+    const response = await fetch("/api/record/delete", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id, domain }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      toast.success("Record deleted successfully!");
+      return true;
+    }
+
+    toast.info(data.message);
+  } catch (err) {
+    console.error("Error while deleting record :", err);
+    toast.error("Unable to delete record. Please try again later!");
+  }
+};
