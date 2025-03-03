@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { toast } from "react-toastify";
 import {
   SignedIn,
@@ -17,9 +17,6 @@ import styles from "@/styles/auth.module.scss";
 
 const Auth = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const isSignUp = searchParams.get("mode") === "sign-up";
-
   const clerk = useClerk();
   const { user, isLoaded } = useUser();
 
@@ -56,46 +53,58 @@ const Auth = () => {
   }, [clerk, user, isLoaded]);
 
   return (
-    <div className={styles.main}>
-      <div className={styles.auth}>
-        <SignedOut>
-          {isSignUp ? (
-            <SignUp
-              routing="hash"
-              signInUrl="/auth?mode=sign-in"
-              forceRedirectUrl="/auth?mode=sign-up"
-            />
-          ) : (
-            <SignIn
-              routing="hash"
-              signUpUrl="/auth?mode=sign-up"
-              forceRedirectUrl="/auth?mode=sign-in"
-            />
-          )}
-        </SignedOut>
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className={styles.main}>
+        <div className={styles.auth}>
+          <AuthHandler />
+        </div>
 
-        <SignedIn>
-          <h2>Registering...</h2>
-        </SignedIn>
-      </div>
-
-      <div className={styles.features}>
-        <div>
-          <h2>Open-Source DNS Management</h2>
-          <p>
-            Get started with free subdomains under veeu.io . Manage DNS records
-            with a clean, intuitive interface.
-          </p>
-
+        <div className={styles.features}>
           <div>
-            <p>✓ Free subdomains under veeu.io</p>
-            <p>✓ Full DNS record management</p>
-            <p>✓ Modern, user-friendly interface</p>
-            <p>✓ Real-time Monitoring</p>
+            <h2>Open-Source DNS Management</h2>
+            <p>
+              Get started with free subdomains under veeu.io . Manage DNS
+              records with a clean, intuitive interface.
+            </p>
+
+            <div>
+              <p>✓ Free subdomains under veeu.io</p>
+              <p>✓ Full DNS record management</p>
+              <p>✓ Modern, user-friendly interface</p>
+              <p>✓ Real-time Monitoring</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </Suspense>
+  );
+};
+
+const AuthHandler = () => {
+  const searchParams = useSearchParams();
+  const isSignUp = searchParams.get("mode") === "sign-up";
+
+  return (
+    <>
+      <SignedOut>
+        {isSignUp ? (
+          <SignUp
+            routing="hash"
+            signInUrl="/auth?mode=sign-in"
+            forceRedirectUrl="/auth?mode=sign-up"
+          />
+        ) : (
+          <SignIn
+            routing="hash"
+            signUpUrl="/auth?mode=sign-up"
+            forceRedirectUrl="/auth?mode=sign-in"
+          />
+        )}
+      </SignedOut>
+      <SignedIn>
+        <h2>Registering...</h2>
+      </SignedIn>
+    </>
   );
 };
 
