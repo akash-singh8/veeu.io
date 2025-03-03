@@ -15,8 +15,12 @@ const DnsRecords = () => {
   const [selectedRecord, setSelectedRecord] = useState<
     (RecordProps & { id: string }) | null
   >(null);
+
+  const currDomain = useSelector(
+    (state: StoreState) => state.domain.currDomain
+  );
   const dnsRecords = useSelector(
-    (state: StoreState) => state.record.currRecords
+    (state: StoreState) => state.record.domainRecordsMap[currDomain]
   );
 
   const setTaskAndRecord = (task: string, ind: number) => {
@@ -51,7 +55,7 @@ const DnsRecords = () => {
           <div className={styles.dataTop}>
             <div>
               <Image src={serverSvg} alt="records" width={24} height={24} />
-              <p>2 DNS Records</p>
+              <p>{dnsRecords.length} DNS Records</p>
             </div>
             <button onClick={() => setTask("NewRecord")}>Add Record</button>
           </div>

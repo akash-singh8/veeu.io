@@ -6,13 +6,12 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
 import { changeDomain, setDomains } from "@/store/domainSlice";
+import { mapDomainRecords } from "@/store/recordSlice";
 import DnsRecords from "@/components/DnsRecords";
 import Analytics from "@/components/Analytics";
 import Settings from "@/components/Settings";
 import NotFound from "@/components/NotFound";
 import NewDomain from "@/components/NewDomain";
-import { mapDomainRecords, setCurrRecords } from "@/store/recordSlice";
-import { StoreState } from "@/store/store";
 
 const Content = () => {
   const pathName = usePathname();
@@ -42,9 +41,8 @@ const Content = () => {
             });
 
             dispatch(mapDomainRecords(domainRecordMap));
-            dispatch(setCurrRecords(data.domains[0].records));
           } else {
-            // TODO: redirect to new domain registration
+            window.history.pushState({}, "", "/new-domain");
             toast.info("Please register a domain to continue.");
           }
         } else if (response.status === 404) {

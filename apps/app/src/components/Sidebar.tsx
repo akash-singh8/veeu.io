@@ -4,18 +4,20 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { UserButton } from "@clerk/nextjs";
 
 import styles from "@/styles/sidebar.module.scss";
 
 import { StoreState } from "@/store/store";
+import { changeDomain } from "@/store/domainSlice";
 import recordSvg from "@/assets/svgs/server.svg";
 import analyticSvg from "@/assets/svgs/analytics.svg";
 import settingSvg from "@/assets/svgs/settings.svg";
 import upDown from "@/assets/svgs/updown.svg";
 
 const Sidebar = () => {
+  const dispatch = useDispatch();
   const domains = useSelector((state: StoreState) => state.domain.domains);
   const currDomainValue = useSelector(
     (state: StoreState) => state.domain.currDomain
@@ -75,7 +77,7 @@ const Sidebar = () => {
                   <div
                     key={domain}
                     className={currDomain === domain ? styles.active : ""}
-                    onClick={() => setCurrDomain(domain)}
+                    onClick={() => dispatch(changeDomain(domain))}
                   >
                     <p className={styles.icon}>{domain[0].toUpperCase()}</p>
                     <p>{domain}</p>

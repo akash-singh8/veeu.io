@@ -2,7 +2,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { changeDomain } from "@/store/domainSlice";
+import { addDomain, changeDomain } from "@/store/domainSlice";
 
 import styles from "@/styles/newdomain.module.scss";
 
@@ -70,6 +70,9 @@ const NewDomain = ({ isFirstDomain }: { isFirstDomain?: boolean }) => {
 
       if (response.ok) {
         dispatch(changeDomain(domain));
+        dispatch(addDomain(domain));
+        window.history.pushState({}, "", "/");
+
         toast.success(`Yay ${domain} is all yours. Enjoy!`);
       } else if (response.status === 409) {
         toast.info("Domain already registered! Please try any other domain.");
