@@ -47,9 +47,9 @@
 }
 
 .body {
-  height: 272px;
-  padding: 1rem 0 1.25rem;
+  padding: 1rem 0 0;
   display: flex;
+  gap: 1rem;
   flex-direction: column;
   justify-content: space-between;
 
@@ -76,7 +76,7 @@
 }
 
 .deleteRecord {
-  padding: 1rem 0 1.25rem;
+  padding: 1rem 0 0;
 
   table {
     border: 1px solid var(--border);
@@ -87,11 +87,16 @@
   thead tr {
     border-top: none;
   }
+
+  button {
+    margin-top: 1rem;
+  }
 }
 
 .action {
   width: 100%;
   padding: 0.5rem;
+  margin-top: 0.5rem;
 
   &:disabled {
     cursor: not-allowed;

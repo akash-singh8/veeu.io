@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
+
+import { StoreState } from "@/store/store";
+import { addRecord } from "@/store/recordSlice";
+import { postDnsRecord } from "@/lib/recordOps";
 
 import styles from "@/styles/popup.module.scss";
 import dnsStyles from "@/styles/dnsrecords.module.scss";
@@ -123,33 +128,52 @@ const Popup = ({ task, type, name, value, user, onClose }: PopupProps) => {
               value={confirmInp}
               onChange={(e) => setConfirmInp(e.target.value)}
             />
+
+            <button className={styles.action} disabled={isDisabled}>
+              {action}
+            </button>
           </div>
         ) : (
-          <RecordAction
+          <RecordBody
+            task={task}
+            action={action}
             rType={type!}
             rName={name!}
             rValue={value!}
+            isDisabled={isDisabled}
             setIsDisabled={setIsDisabled}
+            close={onClose}
           />
         )}
-
-        <button className={styles.action} disabled={isDisabled}>
-          {action}
-        </button>
       </div>
     </div>
   );
 };
 
 type RecordProps = {
+  task: string;
+  action: string;
   rType: string;
   rName: string;
   rValue: string;
+  isDisabled: boolean;
   setIsDisabled: (s: boolean) => void;
+  close: () => void;
 };
 
-const RecordAction = ({ rType, rName, rValue, setIsDisabled }: RecordProps) => {
-  const [type, setType] = useState(rType);
+const RecordBody = ({
+  task,
+  action,
+  rType,
+  rName,
+  rValue,
+  isDisabled,
+  setIsDisabled,
+  close,
+}: RecordProps) => {
+  const dispatch = useDispatch();
+  const domain = useSelector((state: StoreState) => state.domain.currDomain);
+  const [type, setType] = useState(rType ?? "A");
   const [name, setName] = useState(rName);
   const [value, setValue] = useState(rValue);
 
@@ -163,6 +187,18 @@ const RecordAction = ({ rType, rName, rValue, setIsDisabled }: RecordProps) => {
       setIsDisabled(!(!!name && !!value));
     }
   }, [type, name, value]);
+
+  const addNewRecord = async () => {
+    const id = await postDnsRecord(type, name, value, domain);
+    if (!id) return;
+    dispatch(addRecord({ domain, record: { id, type, name, value } }));
+  };
+
+  const actionHandler = () => {
+    if (task === "NewRecord") addNewRecord();
+
+    close();
+  };
 
   return (
     <div className={styles.body}>
@@ -202,6 +238,14 @@ const RecordAction = ({ rType, rName, rValue, setIsDisabled }: RecordProps) => {
           onChange={(e) => setValue(e.target.value)}
         />
       </div>
+
+      <button
+        onClick={actionHandler}
+        className={styles.action}
+        disabled={isDisabled}
+      >
+        {action}
+      </button>
     </div>
   );
 };
