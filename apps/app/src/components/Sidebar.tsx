@@ -15,8 +15,10 @@ import settingSvg from "@/assets/svgs/settings.svg";
 import upDown from "@/assets/svgs/updown.svg";
 
 const Sidebar = () => {
-  const domains = useSelector((state: StoreState) => state.domains);
-  const currDomainValue = useSelector((state: StoreState) => state.currDomain);
+  const domains = useSelector((state: StoreState) => state.domain.domains);
+  const currDomainValue = useSelector(
+    (state: StoreState) => state.domain.currDomain
+  );
 
   const pathName = usePathname();
   const [showDomains, setShowDomains] = useState(false);

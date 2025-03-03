@@ -1,38 +1,30 @@
-import { useState } from "react";
 import Image from "next/image";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 
-import styles from "@/styles/dnsrecords.module.scss";
+import { StoreState } from "@/store/store";
 import Popup from "./Popup";
 
+import styles from "@/styles/dnsrecords.module.scss";
 import serverSvg from "@/assets/svgs/server.svg";
 import editSvg from "@/assets/svgs/edit.svg";
 import trashSvg from "@/assets/svgs/trash.svg";
-
-const DNS_Records = [
-  {
-    type: "A",
-    name: "@",
-    value: "192.168.1.1",
-  },
-  {
-    type: "CNAME",
-    name: "www",
-    value: "codex.veeu.io",
-  },
-];
 
 const DnsRecords = () => {
   const [task, setTask] = useState("");
   const [selectedRecord, setSelectedRecord] = useState<RecordProps | null>(
     null
   );
+  const dnsRecords = useSelector(
+    (state: StoreState) => state.record.currRecords
+  );
 
   const setTaskAndRecord = (task: string, ind: number) => {
     setTask(task);
     setSelectedRecord({
-      type: DNS_Records[ind].type,
-      name: DNS_Records[ind].name,
-      value: DNS_Records[ind].value,
+      type: dnsRecords[ind].type,
+      name: dnsRecords[ind].name,
+      value: dnsRecords[ind].value,
     });
   };
 
@@ -71,9 +63,9 @@ const DnsRecords = () => {
               </tr>
             </thead>
             <tbody>
-              {DNS_Records.map((record, i) => (
+              {dnsRecords.map((record, i) => (
                 <Record
-                  key={i}
+                  key={record.id}
                   type={record.type}
                   name={record.name}
                   value={record.value}
