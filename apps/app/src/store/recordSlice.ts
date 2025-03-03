@@ -33,6 +33,14 @@ const recordSlice = createSlice({
       state.currRecords.push(action.payload.record);
       state.domainRecordsMap[action.payload.domain].push(action.payload.record);
     },
+    updateRecord: (state, action) => {
+      const updatedRecords = state.currRecords.filter(
+        (record) => record.id !== action.payload.newRecord.id
+      );
+      updatedRecords.push(action.payload.newRecord);
+      state.currRecords = updatedRecords;
+      state.domainRecordsMap[action.payload.domain] = updatedRecords;
+    },
     removeRecord: (state, action) => {
       const updatedRecords = state.currRecords.filter(
         (record) => record.id !== action.payload.id
@@ -43,7 +51,12 @@ const recordSlice = createSlice({
   },
 });
 
-export const { setCurrRecords, mapDomainRecords, addRecord, removeRecord } =
-  recordSlice.actions;
+export const {
+  setCurrRecords,
+  mapDomainRecords,
+  addRecord,
+  updateRecord,
+  removeRecord,
+} = recordSlice.actions;
 
 export default recordSlice.reducer;

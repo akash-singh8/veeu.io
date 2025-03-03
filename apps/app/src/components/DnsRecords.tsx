@@ -12,9 +12,9 @@ import trashSvg from "@/assets/svgs/trash.svg";
 
 const DnsRecords = () => {
   const [task, setTask] = useState("");
-  const [selectedRecord, setSelectedRecord] = useState<RecordProps | null>(
-    null
-  );
+  const [selectedRecord, setSelectedRecord] = useState<
+    (RecordProps & { id: string }) | null
+  >(null);
   const dnsRecords = useSelector(
     (state: StoreState) => state.record.currRecords
   );
@@ -22,6 +22,7 @@ const DnsRecords = () => {
   const setTaskAndRecord = (task: string, ind: number) => {
     setTask(task);
     setSelectedRecord({
+      id: dnsRecords[ind].id,
       type: dnsRecords[ind].type,
       name: dnsRecords[ind].name,
       value: dnsRecords[ind].value,
@@ -33,9 +34,10 @@ const DnsRecords = () => {
       {task && (
         <Popup
           task={task}
-          type={selectedRecord?.type!}
-          name={selectedRecord?.name!}
-          value={selectedRecord?.value!}
+          recordId={selectedRecord?.id}
+          type={selectedRecord?.type}
+          name={selectedRecord?.name}
+          value={selectedRecord?.value}
           onClose={() => {
             setTask("");
             setSelectedRecord(null);

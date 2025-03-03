@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 
 import { StoreState } from "@/store/store";
-import { addRecord } from "@/store/recordSlice";
-import { postDnsRecord } from "@/lib/recordOps";
+import { addRecord, updateRecord } from "@/store/recordSlice";
+import { postDnsRecord, putDnsRecord } from "@/lib/recordOps";
 
 import styles from "@/styles/popup.module.scss";
 import dnsStyles from "@/styles/dnsrecords.module.scss";
@@ -13,6 +13,7 @@ import crossSvg from "@/assets/svgs/cross.svg";
 
 type PopupProps = {
   task: string;
+  recordId?: string;
   type?: string;
   name?: string;
   value?: string;
@@ -20,7 +21,15 @@ type PopupProps = {
   onClose: () => void;
 };
 
-const Popup = ({ task, type, name, value, user, onClose }: PopupProps) => {
+const Popup = ({
+  task,
+  recordId,
+  type,
+  name,
+  value,
+  user,
+  onClose,
+}: PopupProps) => {
   let title = "Add DNS Record";
   let description = "Create a new DNS record for your domain";
   let action = "Add Record";
@@ -137,6 +146,7 @@ const Popup = ({ task, type, name, value, user, onClose }: PopupProps) => {
           <RecordBody
             task={task}
             action={action}
+            recordId={recordId!}
             rType={type!}
             rName={name!}
             rValue={value!}
@@ -153,6 +163,7 @@ const Popup = ({ task, type, name, value, user, onClose }: PopupProps) => {
 type RecordProps = {
   task: string;
   action: string;
+  recordId: string;
   rType: string;
   rName: string;
   rValue: string;
@@ -164,6 +175,7 @@ type RecordProps = {
 const RecordBody = ({
   task,
   action,
+  recordId,
   rType,
   rName,
   rValue,
@@ -194,8 +206,23 @@ const RecordBody = ({
     dispatch(addRecord({ domain, record: { id, type, name, value } }));
   };
 
+  const modifyRecord = async () => {
+    const isUpdated = await putDnsRecord(
+      recordId,
+      domain,
+      rType !== type ? type : "",
+      rName !== name ? name : "",
+      rValue !== value ? value : ""
+    );
+    if (!isUpdated) return;
+    dispatch(
+      updateRecord({ domain, newRecord: { id: recordId, type, name, value } })
+    );
+  };
+
   const actionHandler = () => {
     if (task === "NewRecord") addNewRecord();
+    if (task === "EditRecord") modifyRecord();
 
     close();
   };
