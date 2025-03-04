@@ -4,14 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { Suspense, useEffect } from "react";
 import { toast } from "react-toastify";
-import {
-  SignedIn,
-  SignedOut,
-  SignIn,
-  SignUp,
-  useClerk,
-  useUser,
-} from "@clerk/nextjs";
+import { SignedOut, SignIn, SignUp, useClerk, useUser } from "@clerk/nextjs";
 
 import styles from "@/styles/auth.module.scss";
 
@@ -85,26 +78,21 @@ const AuthHandler = () => {
   const isSignUp = searchParams.get("mode") === "sign-up";
 
   return (
-    <>
-      <SignedOut>
-        {isSignUp ? (
-          <SignUp
-            routing="hash"
-            signInUrl="/auth?mode=sign-in"
-            forceRedirectUrl="/auth?mode=sign-up"
-          />
-        ) : (
-          <SignIn
-            routing="hash"
-            signUpUrl="/auth?mode=sign-up"
-            forceRedirectUrl="/auth?mode=sign-in"
-          />
-        )}
-      </SignedOut>
-      <SignedIn>
-        <h2>Registering...</h2>
-      </SignedIn>
-    </>
+    <SignedOut>
+      {isSignUp ? (
+        <SignUp
+          routing="hash"
+          signInUrl="/auth?mode=sign-in"
+          forceRedirectUrl="/auth?mode=sign-up"
+        />
+      ) : (
+        <SignIn
+          routing="hash"
+          signUpUrl="/auth?mode=sign-up"
+          forceRedirectUrl="/auth?mode=sign-in"
+        />
+      )}
+    </SignedOut>
   );
 };
 
