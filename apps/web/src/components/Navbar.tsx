@@ -1,4 +1,6 @@
 "use client";
+
+import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -46,7 +48,16 @@ const Navbar = () => {
         </div>
 
         <div className={styles.action}>
-          <button>Get Started</button>
+          <Link
+            className={styles.login}
+            href="https://app.veeu.io/auth?mode=sign-ip"
+          >
+            <button>Log in</button>
+          </Link>
+
+          <Link href="https://app.veeu.io/auth?mode=sign-up">
+            <button>Sign up</button>
+          </Link>
         </div>
       </div>
     </nav>

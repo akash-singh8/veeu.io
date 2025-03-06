@@ -55,4 +55,15 @@
 .action {
   flex: 1;
   text-align: right;
+
+  button {
+    font-weight: 400;
+  }
+}
+
+.login button {
+  color: var(--lightBlack);
+  border: 1px solid #e7e8ed;
+  background-color: var(--background);
+  margin-right: 0.75rem;
 }
