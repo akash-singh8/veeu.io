@@ -1,8 +1,8 @@
 import Image from "next/image";
 
+import FindDomain from "@/components/FindDomain";
+
 import styles from "@/styles/landing.module.scss";
-import www from "@/assets/svgs/www.svg";
-import search from "@/assets/svgs/search.svg";
 import eye from "@/assets/svgs/eye.svg";
 import right from "@/assets/svgs/right.svg";
 import dots from "@/assets/svgs/dots.svg";
@@ -26,18 +26,7 @@ const Landing = () => {
       </div>
 
       <div className={styles.try}>
-        <div className={styles.tryTop}>
-          <Image src={www} alt="www" width={16} />
-          <p>Find a Domain</p>
-        </div>
-
-        <div className={styles.domain}>
-          <input type="text" placeholder="Claim your domain..." />
-          <p>.veeu.io</p>
-          <button>
-            <Image src={search} alt="search" height={20} />
-          </button>
-        </div>
+        <FindDomain />
 
         <div className={styles.example}>
           <div className={styles.egDetails}>

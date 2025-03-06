@@ -129,6 +129,11 @@
     img {
       margin-bottom: -5px;
     }
+
+    &:disabled {
+      cursor: progress;
+      opacity: 0.5;
+    }
   }
 }
 
