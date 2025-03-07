@@ -9,7 +9,7 @@ import styles from "@/styles/newdomain.module.scss";
 import checkSvg from "@/assets/svgs/check.svg";
 import annoyedSvg from "@/assets/svgs/annoyed.svg";
 
-const NewDomain = ({ isFirstDomain }: { isFirstDomain?: boolean }) => {
+const NewDomain = () => {
   const [domain, setDomain] = useState("");
   // -1 => not available, 0 => not checked, 1 => available
   const [isAvailable, setIsAvailable] = useState(0);
@@ -88,9 +88,7 @@ const NewDomain = ({ isFirstDomain }: { isFirstDomain?: boolean }) => {
 
   return (
     <div className={styles.main}>
-      <h2>
-        {isFirstDomain ? "Book a Domain to continue" : "Register New Domain"}
-      </h2>
+      <h2>Register New Domain</h2>
 
       <div className={styles.book}>
         <h2>Search and book a domain in one click</h2>

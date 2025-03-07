@@ -16,9 +16,9 @@ import NewDomain from "@/components/NewDomain";
 const Content = () => {
   const pathName = usePathname();
   const dispatch = useDispatch();
-  const [hasDomains, setHasDomains] = useState(false);
 
   useEffect(() => {
+    let tryCount = 0;
     const fetchDomainWRecords = async () => {
       try {
         const response = await fetch("/api/domain/get");
@@ -27,7 +27,6 @@ const Content = () => {
           const data = await response.json();
 
           if (data.domains?.length) {
-            setHasDomains(true);
             dispatch(changeDomain(data.domains[0].domain));
             dispatch(
               setDomains(
@@ -43,10 +42,17 @@ const Content = () => {
             dispatch(mapDomainRecords(domainRecordMap));
           } else {
             window.history.pushState({}, "", "/new-domain");
-            toast.info("Please register a domain to continue.");
+            toast.info("Book your first domain to continue.", {
+              theme: "colored",
+            });
           }
         } else if (response.status === 404) {
-          toast.info("User not found!");
+          if (tryCount === 5) {
+            toast.info("User not registered. Please try logging in again!");
+            return;
+          }
+          tryCount += 1;
+          setTimeout(fetchDomainWRecords, 1000);
         } else {
           throw new Error("Unable to fetch data!");
         }
@@ -57,8 +63,6 @@ const Content = () => {
 
     fetchDomainWRecords();
   }, []);
-
-  if (!hasDomains) return <NewDomain isFirstDomain={true} />;
 
   return pathName === "/" ? (
     <DnsRecords />

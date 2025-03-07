@@ -55,7 +55,7 @@ const DnsRecords = () => {
           <div className={styles.dataTop}>
             <div>
               <Image src={serverSvg} alt="records" width={24} height={24} />
-              <p>{dnsRecords.length} DNS Records</p>
+              <p>{dnsRecords?.length} DNS Records</p>
             </div>
             <button onClick={() => setTask("NewRecord")}>Add Record</button>
           </div>
@@ -69,7 +69,7 @@ const DnsRecords = () => {
               </tr>
             </thead>
             <tbody>
-              {dnsRecords.map((record, i) => (
+              {dnsRecords?.map((record, i) => (
                 <Record
                   key={record.id}
                   type={record.type}

@@ -28,7 +28,7 @@ export default function RootLayout({
       <body className={`${poppins.variable}`}>
         <ClerkProvider>
           <ToastContainer
-            position="top-center"
+            position="top-right"
             closeOnClick
             pauseOnFocusLoss
             draggable
